@@ -22,8 +22,9 @@ public class AutomatMP {
     public static void main(String[] args) {
         ArrayList<Objects>steps = new ArrayList();
         Objects start = new Objects();
+        //calling the recursion function
         int x = EarthMode(steps,start);
-        System.out.println("Fastest Solution: "+x+" Moves");
+        System.out.println("Fastest Solution: "+(x-1)+" Moves");
         System.out.println("Total Reachable States that follow the rules: " + (EarthReachable.size()+MarsReachable.size()));
         System.out.println("Total Solutions (without reusing a state): "+Solutions.size());
         System.out.println("STATES");
@@ -40,12 +41,13 @@ public class AutomatMP {
         }
     }
     public static int EarthMode(ArrayList <Objects> pastmoves, Objects newmove){
-
+        //recursion when scientist is on earth
         if(checkMarsstuff(newmove)||!checkPast(pastmoves,newmove))
             return 0;
         else{
             if(checkPast(EarthReachable,newmove))
                 EarthReachable=addingPast(EarthReachable,newmove);
+            //recording this new move so it wont be redone
             ArrayList <Objects> newpastmoves = new ArrayList();
             newpastmoves=copyingPast(newpastmoves,pastmoves);
             newpastmoves=addingPast(newpastmoves,newmove);
@@ -59,6 +61,7 @@ public class AutomatMP {
             for(int i=0;i<5;i++){
                 nextmove.change(i,newmove.getthings()[i]);
             }
+            //making all next moves
             while(countFalse(nextmoves)!=trues){
                 for(int i=0;i<trues;i++){
                     if(nextmoves[i]){
@@ -73,13 +76,16 @@ public class AutomatMP {
                     }
                 }
                 int y=999;
+                //choosing all next moves that only move 1 or 2 things since rocket has max 3 seats
                 if(countFalse(nextmoves)==1||countFalse(nextmoves)==2){
                     for(int i=0;i<trues;i++)
                         nextmove.change(ints.get(i),nextmoves[i] );
+                    //recursion intensifies
                     y=MarsMode(newpastmoves,nextmove);
                     if(y==0)
                         y=999;
                 }
+                //choosing shortest move
                 if(y<x)
                     x=y;
 
@@ -91,7 +97,7 @@ public class AutomatMP {
     
     
     public static  int MarsMode(ArrayList <Objects> pastmoves, Objects newmove){
-        //System.out.println(pastmoves.size());
+        //recursion when scientist is on mars
         if(checkEarthstuff(newmove)||!checkPast(pastmoves,newmove))
             return 0;
         else if(newmove.win()){
@@ -105,6 +111,7 @@ public class AutomatMP {
         }else{
             if(checkPast(MarsReachable,newmove))
                MarsReachable=addingPast(MarsReachable,newmove);
+            //recording this new move so it wont be redone
             ArrayList <Objects> newpastmoves = new ArrayList();
             newpastmoves=copyingPast(newpastmoves,pastmoves);
             newpastmoves=addingPast(newpastmoves,newmove);
@@ -118,6 +125,7 @@ public class AutomatMP {
             for(int i=0;i<5;i++){
                 nextmove.change(i,newmove.getthings()[i]);
             }
+            //making all next moves
             while(countTrue(nextmoves)!=falses){
                 for(int i=0;i<falses;i++){
                     if(!nextmoves[i]){
@@ -130,16 +138,18 @@ public class AutomatMP {
                         break;
                     }
                 }
+                
                 int y=999;
+                //choosing all next moves that only move 1 or 2 things since rocket has max 3 seats
                 if(countTrue(nextmoves)==1||countTrue(nextmoves)==2){
-
-                    
                     for(int i=0;i<falses;i++)
                         nextmove.change(ints.get(i),nextmoves[i] );
+                    //recursion intensifies
                     y=EarthMode(newpastmoves,nextmove);
                     if(y==0)
                         y=999;
                 }
+                //choosing shortest move
                 if(y<x)
                     x=y;
 
@@ -164,12 +174,19 @@ public class AutomatMP {
             boolean orig = true;
             for(int i=0;i<pastmoves.size();i++){
                 int j;
+                int ctr=0,ctr2=0;
+                for(j=0;j<2;j++){
+                    if(pastmoves.get(i).getthings()[j])
+                        ctr++;
+                    if(newmove.getthings()[j])
+                        ctr2++;
+                }
                 
-                for(j=0;j<5;j++){
+                for(j=2;j<5;j++){
                     if(pastmoves.get(i).getthings()[j]!=newmove.getthings()[j])
                         break;
                 }
-                if(j==5){
+                if(j==5&&ctr==ctr2){
                     orig=false;
                 }
                     
@@ -234,7 +251,7 @@ public class AutomatMP {
                     System.out.print(getperson(j)+" ");
             }
             if(i%2==0)
-                System.out.print("scientist");
+                System.out.print(s);
             System.out.println("");
             System.out.print("MARS: ");
             for(int j=0;j<strat.get(i).things.length;j++){
@@ -242,13 +259,12 @@ public class AutomatMP {
                     System.out.print(getperson(j)+" ");
             }
             if(i%2==1)
-                System.out.print("scientist");
+                System.out.print(s);
             System.out.println("");
             System.out.println("");
         }
     }
     public static void printsolution(ArrayList <Objects> earth,ArrayList <Objects> mars){
-        
         for(int i=0;i<earth.size();i++){
             
             System.out.print("EARTH: ");
@@ -256,7 +272,7 @@ public class AutomatMP {
                 if(earth.get(i).getthings()[j])
                     System.out.print(getperson(j)+" ");
             }
-            System.out.println("scientist");
+            System.out.println(s);
             System.out.print("MARS: ");
             for(int j=0;j<earth.get(i).things.length;j++){
                 if(!earth.get(i).getthings()[j])
@@ -264,9 +280,8 @@ public class AutomatMP {
             }
             System.out.println("");
             System.out.println("");
-        }
-        for(int i=0;i<mars.size();i++){
             
+                        
             System.out.print("EARTH: ");
             for(int j=0;j<mars.get(i).things.length;j++){
                 if(mars.get(i).getthings()[j])
@@ -278,20 +293,22 @@ public class AutomatMP {
                 if(!mars.get(i).getthings()[j])
                     System.out.print(getperson(j)+" ");
             }
-            System.out.println("scientist");
+            System.out.println(s);
             System.out.println("");
         }
+
     }
     public static String getperson(int x){
         if(x==0){
-            return "man1";
+            return "H";
         }else if(x==1){
-            return "man2";
+            return "H";
         }else if(x==2){
-            return "lion";
+            return "L";
         }else if(x==3){
-            return "cow";
+            return "C";
         }else
-            return "grain";
+            return "G";
     }
+    private static String s = "S";
 }
