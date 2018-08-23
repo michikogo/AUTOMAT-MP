@@ -5,6 +5,10 @@
  */
 package automatmp;
 
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mart
@@ -16,7 +20,16 @@ public class MainGui extends javax.swing.JFrame {
      */
     public MainGui() {
         initComponents();
+        Rocket1.setEnabled(false);
+        Rocket2.setEnabled(false);
     }
+    void MoveListener(ActionListener listen){
+		Move.addActionListener(listen);
+    }
+    private int r1=5;
+    private int r2=5;
+    private boolean earth = true;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,12 +40,90 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Move = new javax.swing.JButton();
+        H1 = new javax.swing.JButton();
+        H2 = new javax.swing.JButton();
+        L = new javax.swing.JButton();
+        Rocket2 = new javax.swing.JButton();
+        C = new javax.swing.JButton();
+        G = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        Rocket1 = new javax.swing.JButton();
+        Rocket = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1330, 570));
+        setPreferredSize(new java.awt.Dimension(1330, 570));
         getContentPane().setLayout(null);
+
+        Move.setText("MOVE");
+        getContentPane().add(Move);
+        Move.setBounds(590, 500, 73, 23);
+
+        H1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/Human1.PNG"))); // NOI18N
+        H1.setBorderPainted(false);
+        H1.setContentAreaFilled(false);
+        H1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                H1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(H1);
+        H1.setBounds(80, 350, 60, 100);
+
+        H2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/Human2.PNG"))); // NOI18N
+        H2.setBorderPainted(false);
+        H2.setContentAreaFilled(false);
+        H2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                H2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(H2);
+        H2.setBounds(150, 360, 60, 100);
+
+        L.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/Lion.PNG"))); // NOI18N
+        L.setBorderPainted(false);
+        L.setContentAreaFilled(false);
+        L.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LActionPerformed(evt);
+            }
+        });
+        getContentPane().add(L);
+        L.setBounds(70, 240, 70, 110);
+
+        Rocket2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rocket2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Rocket2);
+        Rocket2.setBounds(380, 300, 70, 90);
+
+        C.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/Cow.PNG"))); // NOI18N
+        C.setBorderPainted(false);
+        C.setContentAreaFilled(false);
+        C.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CActionPerformed(evt);
+            }
+        });
+        getContentPane().add(C);
+        C.setBounds(140, 200, 70, 110);
+
+        G.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/Grain.PNG"))); // NOI18N
+        G.setBorderPainted(false);
+        G.setContentAreaFilled(false);
+        G.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GActionPerformed(evt);
+            }
+        });
+        getContentPane().add(G);
+        G.setBounds(190, 240, 70, 110);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/eathchan.PNG"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -40,7 +131,20 @@ public class MainGui extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/marschan.PNG"))); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(930, 200, 400, 330);
+        jLabel3.setBounds(960, 200, 370, 330);
+
+        Rocket1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rocket1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Rocket1);
+        Rocket1.setBounds(430, 380, 70, 90);
+
+        Rocket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/rocketright.PNG"))); // NOI18N
+        Rocket.setText("r");
+        getContentPane().add(Rocket);
+        Rocket.setBounds(290, 300, 430, 200);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/galaxy.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -49,6 +153,241 @@ public class MainGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void H1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_H1ActionPerformed
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("Human1.PNG"));
+        if(r1==5){
+            H1.setVisible(false);
+            r1=0;
+            Rocket1.setIcon(pic); 
+            Rocket1.setContentAreaFilled(false);
+            Rocket1.setEnabled(true);
+        }else if(r2==5){
+            H1.setVisible(false);
+            r2=0;
+            Rocket2.setIcon(pic); 
+            Rocket2.setContentAreaFilled(false);
+            Rocket2.setEnabled(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Rocket is full");
+    }//GEN-LAST:event_H1ActionPerformed
+
+    private void H2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_H2ActionPerformed
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("Human2.PNG"));
+        if(r1==5){
+            H2.setVisible(false);
+            r1=1;
+            Rocket1.setIcon(pic); 
+            Rocket1.setContentAreaFilled(false);
+            Rocket1.setEnabled(true);
+            
+        }else if(r2==5){
+            H2.setVisible(false);
+            r2=1;
+            Rocket2.setIcon(pic); 
+            Rocket2.setContentAreaFilled(false);
+            Rocket2.setEnabled(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Rocket is full");
+    }//GEN-LAST:event_H2ActionPerformed
+
+    private void LActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LActionPerformed
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("Lion.PNG"));
+        if(r1==5){
+            L.setVisible(false);
+            r1=2;
+            Rocket1.setIcon(pic); 
+            Rocket1.setContentAreaFilled(false);
+            Rocket1.setEnabled(true);
+        }else if(r2==5){
+            L.setVisible(false);
+            r2=2;
+            Rocket2.setIcon(pic); 
+            Rocket2.setContentAreaFilled(false);
+            Rocket2.setEnabled(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Rocket is full");
+    }//GEN-LAST:event_LActionPerformed
+
+    private void CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CActionPerformed
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("Cow.PNG"));
+        if(r1==5){
+            C.setVisible(false);
+            r1=3;
+            Rocket1.setIcon(pic); 
+            Rocket1.setContentAreaFilled(false);
+            Rocket1.setEnabled(true);
+        }else if(r2==5){
+            C.setVisible(false);
+            r2=3;
+            Rocket2.setIcon(pic); 
+            Rocket2.setContentAreaFilled(false);
+            Rocket2.setEnabled(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Rocket is full");
+    }//GEN-LAST:event_CActionPerformed
+
+    private void GActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GActionPerformed
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("Grain.PNG"));
+        if(r1==5){
+            G.setVisible(false);
+            r1=4;
+            Rocket1.setIcon(pic); 
+            Rocket1.setContentAreaFilled(false);
+            Rocket1.setEnabled(true);
+        }else if(r2==5){
+            G.setVisible(false);
+            r2=4;
+            Rocket2.setIcon(pic); 
+            Rocket2.setContentAreaFilled(false);
+            Rocket2.setEnabled(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Rocket is full");
+    }//GEN-LAST:event_GActionPerformed
+
+    private void Rocket2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rocket2ActionPerformed
+        Rocket2Action();
+    }//GEN-LAST:event_Rocket2ActionPerformed
+
+    private void Rocket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rocket1ActionPerformed
+        Rocket1Action();
+    }//GEN-LAST:event_Rocket1ActionPerformed
+    public void changemode(){
+        earth=!earth;
+    }
+    public boolean getearth(){
+        return earth;
+    }
+    public int getR1(){
+        return r1;
+    }
+    public int getR2(){
+        return r2;
+    }
+    public void moverocketright(){
+        Rocket.setLocation(Rocket.getX()+1, Rocket.getY());
+        Rocket1.setLocation(Rocket1.getX()+1, Rocket1.getY());
+        Rocket2.setLocation(Rocket2.getX()+1, Rocket2.getY());
+    }
+    public void moverocketleft(){
+        Rocket.setLocation(Rocket.getX()-1, Rocket.getY());
+        Rocket1.setLocation(Rocket1.getX()-1, Rocket1.getY());
+        Rocket2.setLocation(Rocket2.getX()-1, Rocket2.getY());
+    }
+    public void rightrocket(){
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("rocketright.PNG"));
+        Rocket.setIcon(pic);
+        Rocket1.setLocation(430, 380);
+        Rocket2.setLocation(380, 300);
+    }
+    public void leftrocket(){
+        ImageIcon pic;
+        pic = new ImageIcon(getClass().getResource("rocketleft.PNG"));
+        Rocket.setIcon(pic);
+        Rocket1.setLocation(800, 380);
+        Rocket2.setLocation(850, 300);
+    }
+    public void moveObjects(){
+        int d = 1000;
+        if(earth){
+            if(r1==0||r2==0){
+                H1.setLocation(H1.getX()+d, H1.getY());
+            }
+            if(r1==1||r2==1){
+                H2.setLocation(H2.getX()+d, H2.getY());
+            }
+            if(r1==2||r2==2){
+                L.setLocation(L.getX()+d, L.getY());
+            }
+            if(r1==3||r2==3){
+                C.setLocation(C.getX()+d, C.getY());
+            }
+            if(r1==4||r2==4){
+                G.setLocation(G.getX()+d, G.getY());
+            }
+        }else{
+            if(r1==0||r2==0){
+                H1.setLocation(H1.getX()-d, H1.getY());
+            }
+            if(r1==1||r2==1){
+                H2.setLocation(H2.getX()-d, H2.getY());
+            }
+            if(r1==2||r2==2){
+                L.setLocation(L.getX()-d, L.getY());
+            }
+            if(r1==3||r2==3){
+                C.setLocation(C.getX()-d, C.getY());
+            }
+            if(r1==4||r2==4){
+                G.setLocation(G.getX()-d, G.getY());
+            }
+        }
+        if(r1!=5)
+            Rocket1Action();
+        if(r2!=5)
+            Rocket2Action();
+    }
+    public void Rocket1Action(){
+        Rocket1.setContentAreaFilled(true);
+        if(r1==0)
+            H1.setVisible(true);
+        else if(r1==1)
+            H2.setVisible(true);
+        else if(r1==2)
+            L.setVisible(true);
+        else if(r1==3)
+            C.setVisible(true);
+        else
+            G.setVisible(true);
+        r1=5;
+        Rocket1.setIcon(null);
+        Rocket1.setEnabled(false);
+    }
+    public void Rocket2Action(){
+        Rocket2.setContentAreaFilled(true);
+        if(r2==0)
+            H1.setVisible(true);
+        else if(r2==1)
+            H2.setVisible(true);
+        else if(r2==2)
+            L.setVisible(true);
+        else if(r2==3)
+            C.setVisible(true);
+        else
+            G.setVisible(true);
+        r2=5;
+        Rocket2.setIcon(null);
+        Rocket2.setEnabled(false);
+    }
+    public void disenablemove(){
+        if(Move.isEnabled())
+            Move.setEnabled(false);
+        else
+            Move.setEnabled(true);
+    }
+    public void DisableRockets(){
+        Rocket1.setEnabled(false);
+        Rocket2.setEnabled(false);
+    }
+    public void EnablePeople(){
+        H1.setEnabled(true);
+        H2.setEnabled(true);
+        L.setEnabled(true);
+        C.setEnabled(true);
+        G.setEnabled(true);
+    }
+    public void DisablePeople(){
+        H1.setEnabled(false);
+        H2.setEnabled(false);
+        L.setEnabled(false);
+        C.setEnabled(false);
+        G.setEnabled(false);
+    }
     /**
      * @param args the command line arguments
      */
@@ -85,6 +424,15 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton C;
+    private javax.swing.JButton G;
+    private javax.swing.JButton H1;
+    private javax.swing.JButton H2;
+    private javax.swing.JButton L;
+    private javax.swing.JButton Move;
+    private javax.swing.JLabel Rocket;
+    private javax.swing.JButton Rocket1;
+    private javax.swing.JButton Rocket2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
