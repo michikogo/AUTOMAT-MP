@@ -544,7 +544,9 @@ public class Controller {
                     i--;
                 }
             }
-            DGui.setShortestC(GuiSolutions);
+            ArrayList <ArrayList<Objects>> newo  = new <ArrayList<Objects>>  ArrayList();
+            newo = duplicate(newo,GuiSolutions);
+            DGui.setShortestC(newo);
         }
     }
     class RocketMover extends TimerTask{

@@ -41,11 +41,6 @@ public class DFAgui extends javax.swing.JFrame {
                     else
                         showPath(ShortestC.get(Sol.getSelectedIndex()));
                 }
-//                Object selected = comboBox.getSelectedItem();
-//                if(selected.toString().equals("item1"))
-//                field.setText("30");
-//                else if(selected.toString().equals("item2"))
-//                    field.setText("40");
 
             }
         });
