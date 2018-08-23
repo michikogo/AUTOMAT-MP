@@ -22,6 +22,8 @@ public class MainGui extends javax.swing.JFrame {
         initComponents();
         Rocket1.setEnabled(false);
         Rocket2.setEnabled(false);
+        Gameover.setVisible(false);
+        EndScreen.setVisible(false);
     }
     void MoveListener(ActionListener listen){
 		Move.addActionListener(listen);
@@ -29,6 +31,17 @@ public class MainGui extends javax.swing.JFrame {
     private int r1=5;
     private int r2=5;
     private boolean earth = true;
+    private boolean human1 = true;
+    private boolean human2 = true;
+    private boolean lion = true;
+    private boolean cow = true;
+    private boolean grain = true;
+    
+    private boolean h1enable = true;
+    private boolean h2enable = true;
+    private boolean lenable = true;
+    private boolean cenable = true;
+    private boolean genable= true;
     
 
     /**
@@ -40,6 +53,7 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         Move = new javax.swing.JButton();
         H1 = new javax.swing.JButton();
         H2 = new javax.swing.JButton();
@@ -51,7 +65,12 @@ public class MainGui extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Rocket1 = new javax.swing.JButton();
         Rocket = new javax.swing.JLabel();
+        EndScreen = new javax.swing.JLabel();
+        Gameover = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/cowend.png"))); // NOI18N
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1330, 570));
@@ -145,6 +164,12 @@ public class MainGui extends javax.swing.JFrame {
         Rocket.setText("r");
         getContentPane().add(Rocket);
         Rocket.setBounds(290, 300, 430, 200);
+        getContentPane().add(EndScreen);
+        EndScreen.setBounds(560, 40, 320, 230);
+
+        Gameover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/gameover.png"))); // NOI18N
+        getContentPane().add(Gameover);
+        Gameover.setBounds(280, 50, 350, 180);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/galaxy.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -152,101 +177,133 @@ public class MainGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void H1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_H1ActionPerformed
+    public void showend(boolean win,int x){
         ImageIcon pic;
-        pic = new ImageIcon(getClass().getResource("Human1.PNG"));
-        if(r1==5){
-            H1.setVisible(false);
-            r1=0;
-            Rocket1.setIcon(pic); 
-            Rocket1.setContentAreaFilled(false);
-            Rocket1.setEnabled(true);
-        }else if(r2==5){
-            H1.setVisible(false);
-            r2=0;
-            Rocket2.setIcon(pic); 
-            Rocket2.setContentAreaFilled(false);
-            Rocket2.setEnabled(true);
+        if(win){
+            pic = new ImageIcon(getClass().getResource("winner.png"));
+        }else{
+            if(x==0)
+                pic = new ImageIcon(getClass().getResource("mandend.jpg"));
+            else if(x==1)
+                pic = new ImageIcon(getClass().getResource("lionend.PNG"));
+            else
+                pic = new ImageIcon(getClass().getResource("cowend.png"));
+            Gameover.setVisible(true);
+        }
+        EndScreen.setIcon(pic);
+        EndScreen.setVisible(true);
+    }
+    private void H1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_H1ActionPerformed
+        if(h1enable){
+            ImageIcon pic;
+            pic = new ImageIcon(getClass().getResource("Human1.PNG"));
+            if(r1==5){
+                H1.setVisible(false);
+                r1=0;
+                Rocket1.setIcon(pic); 
+                Rocket1.setContentAreaFilled(false);
+                Rocket1.setEnabled(true);
+            }else if(r2==5){
+                H1.setVisible(false);
+                r2=0;
+                Rocket2.setIcon(pic); 
+                Rocket2.setContentAreaFilled(false);
+                Rocket2.setEnabled(true);
+            }else
+                JOptionPane.showMessageDialog(this, "Rocket is full");
         }else
-            JOptionPane.showMessageDialog(this, "Rocket is full");
+            JOptionPane.showMessageDialog(this, "You cannot move this");
+
     }//GEN-LAST:event_H1ActionPerformed
 
     private void H2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_H2ActionPerformed
-        ImageIcon pic;
-        pic = new ImageIcon(getClass().getResource("Human2.PNG"));
-        if(r1==5){
-            H2.setVisible(false);
-            r1=1;
-            Rocket1.setIcon(pic); 
-            Rocket1.setContentAreaFilled(false);
-            Rocket1.setEnabled(true);
-            
-        }else if(r2==5){
-            H2.setVisible(false);
-            r2=1;
-            Rocket2.setIcon(pic); 
-            Rocket2.setContentAreaFilled(false);
-            Rocket2.setEnabled(true);
+        if(h2enable){
+            ImageIcon pic;
+            pic = new ImageIcon(getClass().getResource("Human2.PNG"));
+            if(r1==5){
+                H2.setVisible(false);
+                r1=1;
+                Rocket1.setIcon(pic); 
+                Rocket1.setContentAreaFilled(false);
+                Rocket1.setEnabled(true);
+
+            }else if(r2==5){
+                H2.setVisible(false);
+                r2=1;
+                Rocket2.setIcon(pic); 
+                Rocket2.setContentAreaFilled(false);
+                Rocket2.setEnabled(true);
+            }else
+                JOptionPane.showMessageDialog(this, "Rocket is full");
         }else
-            JOptionPane.showMessageDialog(this, "Rocket is full");
+            JOptionPane.showMessageDialog(this, "You cannot move this");
+
     }//GEN-LAST:event_H2ActionPerformed
 
     private void LActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LActionPerformed
-        ImageIcon pic;
-        pic = new ImageIcon(getClass().getResource("Lion.PNG"));
-        if(r1==5){
-            L.setVisible(false);
-            r1=2;
-            Rocket1.setIcon(pic); 
-            Rocket1.setContentAreaFilled(false);
-            Rocket1.setEnabled(true);
-        }else if(r2==5){
-            L.setVisible(false);
-            r2=2;
-            Rocket2.setIcon(pic); 
-            Rocket2.setContentAreaFilled(false);
-            Rocket2.setEnabled(true);
+        if(lenable){
+            ImageIcon pic;
+            pic = new ImageIcon(getClass().getResource("Lion.PNG"));
+            if(r1==5){
+                L.setVisible(false);
+                r1=2;
+                Rocket1.setIcon(pic); 
+                Rocket1.setContentAreaFilled(false);
+                Rocket1.setEnabled(true);
+            }else if(r2==5){
+                L.setVisible(false);
+                r2=2;
+                Rocket2.setIcon(pic); 
+                Rocket2.setContentAreaFilled(false);
+                Rocket2.setEnabled(true);
+            }else
+                JOptionPane.showMessageDialog(this, "Rocket is full");  
         }else
-            JOptionPane.showMessageDialog(this, "Rocket is full");
+            JOptionPane.showMessageDialog(this, "You cannot move this");
     }//GEN-LAST:event_LActionPerformed
 
     private void CActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CActionPerformed
-        ImageIcon pic;
-        pic = new ImageIcon(getClass().getResource("Cow.PNG"));
-        if(r1==5){
-            C.setVisible(false);
-            r1=3;
-            Rocket1.setIcon(pic); 
-            Rocket1.setContentAreaFilled(false);
-            Rocket1.setEnabled(true);
-        }else if(r2==5){
-            C.setVisible(false);
-            r2=3;
-            Rocket2.setIcon(pic); 
-            Rocket2.setContentAreaFilled(false);
-            Rocket2.setEnabled(true);
+        if(cenable){
+            ImageIcon pic;
+            pic = new ImageIcon(getClass().getResource("Cow.PNG"));
+            if(r1==5){
+                C.setVisible(false);
+                r1=3;
+                Rocket1.setIcon(pic); 
+                Rocket1.setContentAreaFilled(false);
+                Rocket1.setEnabled(true);
+            }else if(r2==5){
+                C.setVisible(false);
+                r2=3;
+                Rocket2.setIcon(pic); 
+                Rocket2.setContentAreaFilled(false);
+                Rocket2.setEnabled(true);
+            }else
+                JOptionPane.showMessageDialog(this, "Rocket is full");
         }else
-            JOptionPane.showMessageDialog(this, "Rocket is full");
+            JOptionPane.showMessageDialog(this, "You cannot move this");
     }//GEN-LAST:event_CActionPerformed
 
     private void GActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GActionPerformed
-        ImageIcon pic;
-        pic = new ImageIcon(getClass().getResource("Grain.PNG"));
-        if(r1==5){
-            G.setVisible(false);
-            r1=4;
-            Rocket1.setIcon(pic); 
-            Rocket1.setContentAreaFilled(false);
-            Rocket1.setEnabled(true);
-        }else if(r2==5){
-            G.setVisible(false);
-            r2=4;
-            Rocket2.setIcon(pic); 
-            Rocket2.setContentAreaFilled(false);
-            Rocket2.setEnabled(true);
+        if(genable){
+            ImageIcon pic;
+            pic = new ImageIcon(getClass().getResource("Grain.PNG"));
+            if(r1==5){
+                G.setVisible(false);
+                r1=4;
+                Rocket1.setIcon(pic); 
+                Rocket1.setContentAreaFilled(false);
+                Rocket1.setEnabled(true);
+            }else if(r2==5){
+                G.setVisible(false);
+                r2=4;
+                Rocket2.setIcon(pic); 
+                Rocket2.setContentAreaFilled(false);
+                Rocket2.setEnabled(true);
+            }else
+                JOptionPane.showMessageDialog(this, "Rocket is full");
         }else
-            JOptionPane.showMessageDialog(this, "Rocket is full");
+            JOptionPane.showMessageDialog(this, "You cannot move this");
     }//GEN-LAST:event_GActionPerformed
 
     private void Rocket2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rocket2ActionPerformed
@@ -258,6 +315,27 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_Rocket1ActionPerformed
     public void changemode(){
         earth=!earth;
+        if(human1!=earth)
+            h1enable=false;
+        else
+            h1enable=true;
+        if(human2!=earth)
+            h2enable=false;
+        else
+            h2enable=true;
+        if(lion!=earth)
+            lenable=false;
+        else
+            lenable=true;
+        if(cow!=earth)
+            cenable=false;
+        else
+            cenable=true;
+        if(grain!=earth)
+            genable=false;
+        else
+            genable=true;
+        
     }
     public boolean getearth(){
         return earth;
@@ -297,34 +375,44 @@ public class MainGui extends javax.swing.JFrame {
         if(earth){
             if(r1==0||r2==0){
                 H1.setLocation(H1.getX()+d, H1.getY());
+                human1=!human1;
             }
             if(r1==1||r2==1){
                 H2.setLocation(H2.getX()+d, H2.getY());
+                human2=!human2;
             }
             if(r1==2||r2==2){
                 L.setLocation(L.getX()+d, L.getY());
+                lion=!lion;
             }
             if(r1==3||r2==3){
                 C.setLocation(C.getX()+d, C.getY());
+                cow=!cow;
             }
             if(r1==4||r2==4){
                 G.setLocation(G.getX()+d, G.getY());
+                grain=!grain;
             }
         }else{
             if(r1==0||r2==0){
                 H1.setLocation(H1.getX()-d, H1.getY());
+                human1=!human1;
             }
             if(r1==1||r2==1){
                 H2.setLocation(H2.getX()-d, H2.getY());
+                human2=!human2;
             }
             if(r1==2||r2==2){
                 L.setLocation(L.getX()-d, L.getY());
+                lion=!lion;
             }
             if(r1==3||r2==3){
                 C.setLocation(C.getX()-d, C.getY());
+                cow=!cow;
             }
             if(r1==4||r2==4){
                 G.setLocation(G.getX()-d, G.getY());
+                grain=!grain;
             }
         }
         if(r1!=5)
@@ -375,18 +463,21 @@ public class MainGui extends javax.swing.JFrame {
         Rocket2.setEnabled(false);
     }
     public void EnablePeople(){
-        H1.setEnabled(true);
-        H2.setEnabled(true);
-        L.setEnabled(true);
-        C.setEnabled(true);
-        G.setEnabled(true);
+        h1enable=true;
+        h2enable=true;
+        lenable=true;
+        cenable=true;
+        genable=true;
     }
     public void DisablePeople(){
-        H1.setEnabled(false);
-        H2.setEnabled(false);
-        L.setEnabled(false);
-        C.setEnabled(false);
-        G.setEnabled(false);
+        h1enable=false;
+        h2enable=false;
+        lenable=false;
+        cenable=false;
+        genable=false;
+    }
+    public void display(String s){
+        JOptionPane.showMessageDialog(this, s);
     }
     /**
      * @param args the command line arguments
@@ -425,7 +516,9 @@ public class MainGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton C;
+    private javax.swing.JLabel EndScreen;
     private javax.swing.JButton G;
+    private javax.swing.JLabel Gameover;
     private javax.swing.JButton H1;
     private javax.swing.JButton H2;
     private javax.swing.JButton L;
@@ -436,5 +529,6 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

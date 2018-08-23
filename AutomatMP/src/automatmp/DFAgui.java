@@ -5,19 +5,66 @@
  */
 package automatmp;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author Mart
  */
 public class DFAgui extends javax.swing.JFrame {
-
+    int current;
+    private ArrayList <ArrayList<Objects>> ShortestC  = new <ArrayList<Objects>>  ArrayList();
+    private ArrayList <ArrayList<Objects>> Shortest  = new <ArrayList<Objects>>  ArrayList();
+    private ArrayList <Objects> AllReach = new <Objects>ArrayList();
     /**
      * Creates new form DFAgui
      */
     public DFAgui() {
         initComponents();
-    }
+        hideall();
+        Sol.setVisible(false);
+        Steps.setVisible(false);
+        Sol.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                //
+                // Get the source of the component, which is our combo
+                // box.
+                //
+                JComboBox comboBox = (JComboBox) event.getSource();
+                int selected = comboBox.getSelectedIndex();
+                if(selected>=0){
+                    if(SSS.isSelected())
+                        showPath(Shortest.get(Sol.getSelectedIndex()));
+                    else
+                        showPath(ShortestC.get(Sol.getSelectedIndex()));
+                }
+//                Object selected = comboBox.getSelectedItem();
+//                if(selected.toString().equals("item1"))
+//                field.setText("30");
+//                else if(selected.toString().equals("item2"))
+//                    field.setText("40");
 
+            }
+        });
+    }
+    public void setShortestC(ArrayList <ArrayList<Objects>> x){
+        ShortestC.clear();
+        ShortestC = x;
+        
+        
+        
+    }
+    public void setState(ArrayList <Objects> x){
+        AllReach = x;
+    }
+    public void setShortest(ArrayList <ArrayList<Objects>> x){
+        Shortest.clear();
+        Shortest = x;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,6 +74,7 @@ public class DFAgui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         Current = new javax.swing.JLabel();
         q1 = new javax.swing.JLabel();
         q2 = new javax.swing.JLabel();
@@ -46,7 +94,13 @@ public class DFAgui extends javax.swing.JFrame {
         q16 = new javax.swing.JLabel();
         q17 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        SCurrent = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Guide = new javax.swing.JTextArea();
+        CS = new javax.swing.JRadioButton();
+        SSC = new javax.swing.JRadioButton();
+        SSS = new javax.swing.JRadioButton();
+        Sol = new javax.swing.JComboBox<>();
+        Steps = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -115,33 +169,108 @@ public class DFAgui extends javax.swing.JFrame {
         getContentPane().add(q15);
         q15.setBounds(650, 520, 40, 40);
 
-        q16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/green.PNG"))); // NOI18N
+        q16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/red.PNG"))); // NOI18N
         getContentPane().add(q16);
-        q16.setBounds(610, 150, 40, 40);
+        q16.setBounds(530, 390, 40, 40);
 
-        q17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/red.PNG"))); // NOI18N
+        q17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/green.PNG"))); // NOI18N
         getContentPane().add(q17);
-        q17.setBounds(530, 390, 40, 40);
+        q17.setBounds(610, 150, 40, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/automata.PNG"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 0, 720, 590);
+        jLabel1.setBounds(10, 0, 710, 590);
 
-        SCurrent.setText("Show Current");
-        SCurrent.addActionListener(new java.awt.event.ActionListener() {
+        Guide.setEditable(false);
+        Guide.setColumns(20);
+        Guide.setRows(5);
+        jScrollPane1.setViewportView(Guide);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(720, 110, 200, 470);
+
+        buttonGroup1.add(CS);
+        CS.setSelected(true);
+        CS.setText("Current State");
+        CS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SCurrentActionPerformed(evt);
+                CSActionPerformed(evt);
             }
         });
-        getContentPane().add(SCurrent);
-        SCurrent.setBounds(730, 60, 100, 20);
+        getContentPane().add(CS);
+        CS.setBounds(720, 0, 200, 23);
+
+        buttonGroup1.add(SSC);
+        SSC.setText("Shortest Solution From Current");
+        SSC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SSCActionPerformed(evt);
+            }
+        });
+        getContentPane().add(SSC);
+        SSC.setBounds(720, 20, 200, 23);
+
+        buttonGroup1.add(SSS);
+        SSS.setText("Shortest Solution From Start");
+        SSS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SSSActionPerformed(evt);
+            }
+        });
+        getContentPane().add(SSS);
+        SSS.setBounds(720, 40, 210, 23);
+
+        Sol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Solution 1" }));
+        Sol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SolActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Sol);
+        Sol.setBounds(720, 60, 200, 20);
+
+        Steps.setText("Shortest Solution Has 7 Steps");
+        getContentPane().add(Steps);
+        Steps.setBounds(720, 80, 190, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SCurrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SCurrentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SCurrentActionPerformed
+    private void CSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSActionPerformed
+        this.hideall();
+        MoveCurrent(current);
+        Sol.setVisible(false);
+        Steps.setVisible(false);
+        Guide.setText("");
+    }//GEN-LAST:event_CSActionPerformed
+
+    private void SSCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSCActionPerformed
+        Sol.removeAllItems();
+        for(int i=0;i<ShortestC.size();i++){
+            Sol.addItem("Solution "+(i+1));
+        }
+        Sol.setVisible(true);
+        Steps.setVisible(true);
+        Steps.setText("Shortest Solution Has "+(ShortestC.get(0).size()-1)+" Steps");
+        showPath(ShortestC.get(0));
+        
+    }//GEN-LAST:event_SSCActionPerformed
+
+    private void SSSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSSActionPerformed
+        
+        Sol.removeAllItems();
+        for(int i=0;i<Shortest.size();i++){
+            Sol.addItem("Solution "+(i+1));
+        }
+        Sol.setVisible(true);
+        Steps.setText("Shortest Solution Has "+(Shortest.get(0).size()-1)+" Steps");
+        Steps.setVisible(true);
+        showPath(Shortest.get(0));
+    }//GEN-LAST:event_SSSActionPerformed
+
+    private void SolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolActionPerformed
+
+    }//GEN-LAST:event_SolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,6 +305,82 @@ public class DFAgui extends javax.swing.JFrame {
                 new DFAgui().setVisible(true);
             }
         });
+    }
+    public void showPath(ArrayList<Objects> y){
+        guide(y);
+        ArrayList<Integer> x = new ArrayList();
+        hideall();
+        for(int i=0;i<y.size();i++){
+            x.add(findstate(AllReach,y.get(i)));
+        }
+        MoveCurrent(x.get(0));
+        for(int i =1;i<x.size();i++){
+            showstep(x.get(i));
+        }
+    }
+    public void guide(ArrayList<Objects> y){
+        
+        Guide.setText("");
+        Guide.append("Assume scientist is \nalways moved per step\n");
+        for(int i=1;i<y.size();i++){
+            Guide.append("STEP "+i+":\n"+"Move");
+            int j;
+            int ctr=0,ctr2=0;
+            for(j=0;j<2;j++){
+                if(y.get(i).getthings()[j])
+                    ctr++;
+                if(y.get(i-1).getthings()[j])
+                    ctr2++;
+            }
+            if(ctr!=ctr2){
+                if(ctr-ctr2==-1||ctr-ctr2==1)
+                    Guide.append(" "+"1 Human");
+                else
+                    Guide.append(" "+"2 Humans");
+            }
+            for(j=2;j<5;j++)
+                if(y.get(i).getthings()[j]!=y.get(i-1).getthings()[j])
+                    Guide.append(" "+getperson(j));
+            Guide.append("\n");
+            if((y.size()%2==1&&i%2==0)||(y.size()%2==0&&i%2==1))
+                Guide.append("to Mars\n");
+            else
+                Guide.append("to Earth\n");
+            
+        }
+    }
+        public String getperson(int x){
+        if(x==0){
+            return "Human";
+        }else if(x==1){
+            return "Human";
+        }else if(x==2){
+            return "Lion";
+        }else if(x==3){
+            return "Cow";
+        }else
+            return "Goat";
+    }
+    public  int findstate(ArrayList <Objects> pastmoves, Objects newmove){
+
+        for(int i=0;i<pastmoves.size();i++){
+            int j;
+            int ctr=0,ctr2=0;
+            for(j=0;j<2;j++){
+                if(pastmoves.get(i).getthings()[j])
+                    ctr++;
+                if(newmove.getthings()[j])
+                    ctr2++;
+            }
+            for(j=2;j<5;j++)
+                if(pastmoves.get(i).getthings()[j]!=newmove.getthings()[j])
+                    break;
+            
+            if(j==5&&ctr==ctr2)
+                return i;
+            
+        }
+        return 18;
     }
     public void showstep(int x){
         if(x==1){
@@ -217,41 +422,50 @@ public class DFAgui extends javax.swing.JFrame {
         }
  
     }
+    public void reset(){
+        hideall();
+        CS.setSelected(true);
+        Sol.setVisible(false);
+        Steps.setVisible(false);
+        Guide.setText("");
+        System.out.println(Shortest.size());
+    }
     public void MoveCurrent(int x){
+        current = x;
         if(x==1){
-            Current.setLocation(q1.getX(), q1.getX());
+            Current.setLocation(q1.getX(), q1.getY());
         }else if(x==2){
-            Current.setLocation(q2.getX(), q2.getX());
+            Current.setLocation(q2.getX(), q2.getY());
         }else if(x==3){
-            Current.setLocation(q3.getX(), q3.getX());
+            Current.setLocation(q3.getX(), q3.getY());
         }else if(x==4){
-            Current.setLocation(q4.getX(), q4.getX());
+            Current.setLocation(q4.getX(), q4.getY());
         }else if(x==5){
-            Current.setLocation(q5.getX(), q5.getX());
+            Current.setLocation(q5.getX(), q5.getY());
         }else if(x==6){
-            Current.setLocation(q6.getX(), q6.getX());
+            Current.setLocation(q6.getX(), q6.getY());
         }else if(x==7){
-            Current.setLocation(q7.getX(), q7.getX());
+            Current.setLocation(q7.getX(), q7.getY());
         }else if(x==8){
-            Current.setLocation(q8.getX(), q8.getX());
+            Current.setLocation(q8.getX(), q8.getY());
         }else if(x==9){
-            Current.setLocation(q9.getX(), q9.getX());
+            Current.setLocation(q9.getX(), q9.getY());
         }else if(x==10){
-            Current.setLocation(q10.getX(), q10.getX());
+            Current.setLocation(q10.getX(), q10.getY());
         }else if(x==11){
-            Current.setLocation(q11.getX(), q11.getX());
+            Current.setLocation(q11.getX(), q11.getY());
         }else if(x==12){
-            Current.setLocation(q12.getX(), q12.getX());
+            Current.setLocation(q12.getX(), q12.getY());
         }else if(x==13){
-            Current.setLocation(q13.getX(), q13.getX());
+            Current.setLocation(q13.getX(), q13.getY());
         }else if(x==14){
-            Current.setLocation(q14.getX(), q14.getX());
+            Current.setLocation(q14.getX(), q14.getY());
         }else if(x==15){
-            Current.setLocation(q15.getX(), q15.getX());
+            Current.setLocation(q15.getX(), q15.getY());
         }else if(x==16){
-            Current.setLocation(q16.getX(), q16.getX());
+            Current.setLocation(q16.getX(), q16.getY());
         }else if(x==17){
-            Current.setLocation(q17.getX(), q17.getX());
+            Current.setLocation(q17.getX(), q17.getY());
         }else{
             Current.setLocation(70, 330);
         }
@@ -276,9 +490,16 @@ public class DFAgui extends javax.swing.JFrame {
         q17.setVisible(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton CS;
     private javax.swing.JLabel Current;
-    private javax.swing.JButton SCurrent;
+    private javax.swing.JTextArea Guide;
+    private javax.swing.JRadioButton SSC;
+    private javax.swing.JRadioButton SSS;
+    private javax.swing.JComboBox<String> Sol;
+    private javax.swing.JLabel Steps;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel q1;
     private javax.swing.JLabel q10;
     private javax.swing.JLabel q11;
