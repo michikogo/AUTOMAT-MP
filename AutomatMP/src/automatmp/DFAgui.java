@@ -98,6 +98,7 @@ public class DFAgui extends javax.swing.JFrame {
         Steps = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1000, 650));
         getContentPane().setLayout(null);
 
         Current.setIcon(new javax.swing.ImageIcon(getClass().getResource("/automatmp/blue.PNG"))); // NOI18N

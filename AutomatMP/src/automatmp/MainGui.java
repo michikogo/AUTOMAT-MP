@@ -183,7 +183,7 @@ public class MainGui extends javax.swing.JFrame {
             pic = new ImageIcon(getClass().getResource("winner.png"));
         }else{
             if(x==0)
-                pic = new ImageIcon(getClass().getResource("mandend.jpg"));
+                pic = new ImageIcon(getClass().getResource("manend.jpg"));
             else if(x==1)
                 pic = new ImageIcon(getClass().getResource("lionend.PNG"));
             else

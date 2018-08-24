@@ -509,11 +509,17 @@ public class Controller {
             return "G";
     }
     private String s = "S";
+    public void transition(int input1, int input2,boolean mode){
+        if(input1!=5)
+            GuiState.change(input1, mode);
+        if(input2!=5)
+            GuiState.change(input2, mode);
+    }
     public void updateGuiObject(){
-        if(MGui.getR1()!=5)
-            GuiState.change(MGui.getR1(), !MGui.getearth());
-        if(MGui.getR2()!=5)
-            GuiState.change(MGui.getR2(), !MGui.getearth());
+        int i1=MGui.getR1();
+        int i2=MGui.getR2();
+        boolean mode =!MGui.getearth();
+        transition(i1,i2,mode);
         boolean x;
         if(MGui.getearth())
             x=checkEarthstuffGui(GuiState);
